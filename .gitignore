@@ -1,0 +1,9 @@
+.bsp
+**/.bsp
+.idea
+**/.idea
+target
+**/target
+.DS_*
+**/project
+project
