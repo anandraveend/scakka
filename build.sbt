@@ -1,3 +1,5 @@
+enablePlugins(JavaAppPackaging)
+
 import sbt._
 
 name:= "skakka"
