@@ -60,3 +60,34 @@
 
 ##### To run as a docker container
 `docker run -p 9500:9500 -d <app>:<version>`
+
+
+# Openshift commands
+##### To add a user to cluster admin role
+
+##### To add OC registry to docker insecure registry list
+
+`sudo vi /etc/docker/daemon.json`
+
+##### To add  user as cluster admin
+
+`oc adm policy add-cluster-role-to-user cluster-admin anand`
+
+##### To logic to OC docker registry
+
+###### Get OC registry info
+
+`oc registry info`
+
+###### Get the current oc user password 
+
+`oc whoami -t`
+
+###### Create docker image tag against the repo
+
+`docker login -u anand -p HLyOMekQ8E9G7vDrov_ccOJ3jX9XBkP0xT5aAGyQsv4 172.30.1.1:5000`
+
+`docker tag skakka:latest 172.30.1.1:5000/myproject/skakka`
+
+`docker push 172.30.1.1:5000/myproject/skakka`
+
