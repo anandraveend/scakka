@@ -11,7 +11,7 @@ node {
 
     stage('Build image') {  
         docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
-            app = docker.build("skakka","--build-arg workspace=${${env.WORKSPACE}}")
+            app = docker.build("skakka","--build-arg workspace=${env.WORKSPACE}")
         }       
     }
 

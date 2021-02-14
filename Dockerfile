@@ -1,7 +1,7 @@
 FROM openjdk:latest
 # workspace folder where jenkins will be executing the sbt build
-ARG workspace   
-ENV workspace_dir=${workspace}
+ARG WORKSPACE   
+ENV workspace_dir=${WORKSPACE}
 WORKDIR /opt/docker
 ADD ${workspace_dir}/target/stage/docker/opt /opt
 RUN ["chown", "-R", "daemon:daemon", "."]
