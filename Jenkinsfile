@@ -8,6 +8,7 @@ pipeline {
         }
         stage ('Docker publish'){
             steps{
+                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} ${DOCKER_REPO}"
                 sh "sbt docker:publishLocal"
             }
         }       
