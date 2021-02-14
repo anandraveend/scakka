@@ -5,7 +5,9 @@ node {
     }
 
     stage('Build image') {  
-       app = docker.build("skakka")
+        docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
+            app = docker.build("skakka")
+        }       
     }
 
     stage('Test image') {
