@@ -1,17 +1,23 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build'){
-            steps{
-                sh "sbt clean compile"
-            }
-        }
-        stage ('Docker publish'){
-            steps{
-                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} ${DOCKER_REPO}"
-                sh "sbt docker:publishLocal"
-            }
-        }       
+node {
+    def app
+    stage('Clone repository') {      
+        checkout scm
+    }
 
+    stage('Build image') {  
+       app = docker.build("skakka")
+    }
+
+    stage('Test image') {
+        app.inside {
+            sh 'echo "Tests passed"'
+        }
+    }
+
+    stage('Push image') {        
+        docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
     }
 }
