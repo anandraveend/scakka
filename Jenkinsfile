@@ -1,7 +1,5 @@
 pipeline {
     agent any
-    tools {sbt "sbtPipeline"}
-
     stages {
         stage('Build'){
             steps{
