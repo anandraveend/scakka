@@ -5,3 +5,5 @@
 target
 **/target
 .DS_*
+.vscode
+.metals
