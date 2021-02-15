@@ -2,7 +2,7 @@ enablePlugins(JavaAppPackaging)
 
 import sbt._
 
-name:= "skakka"
+name:= "scala-http"
 
 version:="1.0"
 
