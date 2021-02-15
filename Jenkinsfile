@@ -3,7 +3,7 @@ node {
     def DOCKER_PROJECT="${env.BRANCH_NAME}/scala-http"
 
     // Skip run if main branch
-    if (branch ~== 'main'){
+    if (branch ==~ 'main'){
         echo "Skipping build for ${env.BRANCH_NAME}"
         currentBuild.result = 'SUCCESS'
         return
