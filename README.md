@@ -73,6 +73,10 @@
 
 `oc adm policy add-cluster-role-to-user cluster-admin anand`
 
+##### To create a new image stream
+
+`oc create is skakka -n myproject`
+
 ##### To logic to OC docker registry
 
 ###### Get OC registry info
