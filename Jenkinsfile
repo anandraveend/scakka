@@ -1,27 +1,27 @@
 node {
     def app
-    stage('Clone repository') {      
+    stage('GIT CHECKOUT') {      
         checkout scm
     }
 
-    stage('Build sbt code') {
+    stage('SBT BUILD') {
         echo "${env.WORKSPACE}"
         sh "sbt clean compile docker:stage"
     }
 
-    stage('Build docker image') {  
+    stage('DOCKER BUILD') {  
         docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
             app = docker.build("myproject/skakka")
         }       
     }
 
-    stage('Test docker image') {
-        app.inside {
-            sh 'echo "Tests passed"'
-        }
-    }
+    // stage('Test docker image') {
+    //     app.inside {
+    //         sh 'echo "Tests passed"'
+    //     }
+    // }
 
-    stage('Tag and push image') {        
+    stage('DOCKER TAG AND PUSH TO OPENSHIFT') {        
         docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
