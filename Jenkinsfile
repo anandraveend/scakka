@@ -1,27 +1,33 @@
 node {
-    def app
+    def app    
+    def DOCKER_PROJECT="${env.BRANCH_NAME}/scala-http"
+
+    // Skip run if main branch
+    if (branch ~= 'main'){
+        echo "Skipping build for ${env.BRANCH_NAME}"
+        currentBuild.result = 'SUCCESS'
+        return
+    }    
+    echo "Running build for ${env.BRANCH_NAME}"
+    echo "Setting DOCKER_PROJECT = " + DOCKER_PROJECT
     stage('GIT CHECKOUT') {      
         checkout scm
     }
 
     stage('SBT BUILD') {
-        echo "${env.WORKSPACE}"
+        echo "SBT Build"
         sh "sbt clean compile docker:stage"
     }
 
     stage('DOCKER BUILD') {  
+        echo "Docker Build"
         docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
-            app = docker.build("myproject/skakka")
+            app = docker.build(DOCKER_PROJECT)
         }       
     }
 
-    // stage('Test docker image') {
-    //     app.inside {
-    //         sh 'echo "Tests passed"'
-    //     }
-    // }
-
-    stage('DOCKER TAG AND PUSH TO OPENSHIFT') {        
+    stage('DOCKER TAG AND PUSH TO OPENSHIFT') {   
+        echo "Docker publish to " + DOCKER_PROJECT    
         docker.withRegistry('http://172.30.1.1:5000', 'docker-registry') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
