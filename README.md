@@ -95,3 +95,13 @@
 
 `oc delete all --selector app=jenkins-pipeline-example`
 
+## Some oc commands
+oc login -u system:admin
+oc create user anand
+oc adm policy add-cluster-role-to-user cluster-admin anand
+oc new-project develop
+oc new-project qa
+oc new-project production
+oc delete all --selector app=ananya-classroom
+oc new-app ananya-classroom:latest --name ananya-classroom
+oc expose service/ananya-classroom --port=4200-tcp
